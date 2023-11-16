@@ -63,7 +63,7 @@ return [
             ]) : [],
         ],
 
-        'rer' => [
+        'RER' => [
             'driver' => 'mysql',
             'host' => env('RER_DB_HOST', '127.0.0.1'),
             'port' => env('RER_DB_PORT', '3306'),

@@ -28,21 +28,28 @@ class DocumentController extends Controller
     return view('dashboard.user.userlocal', ['documents' => $documents]);
     }
     
-    public function showDocumentspublic(Request $request1)
-    {
-    
-    $query = $request1->input('search');
-    
-    if ($query) {
-        $documents = Document::where('nom', 'like', '%' . $query . '%')
-        ->where('prive', false)
-        ->get();
-    } else {
-        $documents = Document::where('prive',0)->get();
-    }
 
-    return view('dashboard.user.userpublic', ['documents' => $documents]);
+
+
+    public function showDocumentspublic(Request $request)
+    {
+        $query = $request->input('search');
+    
+        if ($query) {
+            // Recherche par nom si une requête de recherche est fournie
+            $documents = DocumentRER::where('nom', 'like', '%' . $query . '%')->get();
+        } else {
+            // Récupère tous les documents si aucune requête de recherche n'est fournie
+            $documents = DocumentRER::all();
+        }
+    
+        return view('dashboard.user.userpublic', ['documents' => $documents]);
     }
+    
+
+
+
+
 
     public function downloadDocument($id)
     {
@@ -58,6 +65,8 @@ class DocumentController extends Controller
     
     
     
+
+
 
     public function store(Request $request)
     {
@@ -77,11 +86,12 @@ class DocumentController extends Controller
             $document = new Document();
             $document->nom = $filename;
             $document->chemin = $path;
+            $document->Univ = 'UTBM';
             $document->nom_utilisateur = Auth::guard('admin')->user()->name;
             $document->prive = !($request->input('public') === 'yes');
             $document->save();
     
-/*
+
                    // Enregistrez dans la base de données RER uniquement si 'public' est égal à 'yes'
         if ($request->input('public') === 'yes') {
             $documentRER = new DocumentRER();
@@ -94,14 +104,18 @@ class DocumentController extends Controller
 
         }
 
-        */
+        
 
 
+        // return response()->json(['success' => 'Document uploaded successfully.']);
 
-         return response()->json(['success' => 'Document uploaded successfully.']);
+       // return redirect()->route('nom_de_la_route')->with('success', 'Document uploaded successfully.');
+
         }
     
-       return response()->json(['error' => 'No files were selected.'], 422);
+       // return redirect()->route('nom_de_la_route')->with('error', 'No files were selected.');
+
+       //return response()->json(['error' => 'No files were selected.'], 422);
        
     }
 }

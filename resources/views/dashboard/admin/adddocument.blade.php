@@ -66,34 +66,34 @@ button[type='submit'] {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('upload-form'); // Assurez-vous que votre formulaire a cet ID
+    const form = document.getElementById('upload-form');
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         const formData = new FormData(this);
-        fetch( "{{ route('admin.documents.store') }}", {
+        fetch("{{ route('admin.documents.store') }}", {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                'Accept': 'application/json'
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
             },
             body: formData
         })
         .then(response => {
             if (!response.ok) throw response;
-            return response.json();
+            return response.text(); // Traitez la réponse en tant que texte
         })
         .then(data => {
-            alert("File succefully added"); // Utilisez 'alert()' pour afficher le message
+            alert('File succefully added'); // Affichez le message de réussite
         })
         .catch(error => {
-            error.json().then(errorData => {
-                alert("Error"); // Affiche un message d'erreur si la requête a échoué
+            error.text().then(errorMessage => {
+                alert(errorMessage); // Affichez le message d'erreur en tant que texte
             });
         });
     });
 });
+
 </script>
 
 

@@ -253,7 +253,7 @@ button[type='submit'] {
             <td>{{ $document->nom_utilisateur }}</td>
             <td>{{ $document->Univ }}</td>
             <td>{{ $document->created_at }}</td>
-            <td><a href="{{ route('documents.download', $document->id) }}">Download</a></td>
+            <td><a href="{{ route('documents.download.remote', $document->id) }}">Download</a></td>
 
         </tr>
     @endforeach

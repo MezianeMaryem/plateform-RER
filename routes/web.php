@@ -108,6 +108,7 @@ Route::get('/public-documents', [DocumentController::class, 'showDocumentspublic
 
 
 Route::get('storage/app/public/documents/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.download');
+Route::get('/download/remote-document/{id}', [DocumentController::class, 'downloadRemoteDocument'])->name('documents.download.remote');
 
 
 Route::get('user/home', [DocumentController::class, 'showAllDocuments'])->name('user.home');

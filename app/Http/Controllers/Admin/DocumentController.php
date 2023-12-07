@@ -8,6 +8,10 @@ use App\Models\Document;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRER;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+
 
 class DocumentController extends Controller
 {
@@ -70,6 +74,8 @@ class DocumentController extends Controller
 
 
 
+  
+
     public function downloadDocument($id)
     {
         $document = Document::findOrFail($id);
@@ -82,6 +88,30 @@ class DocumentController extends Controller
         }
     }
    
+    public function downloadRemoteDocument($id)
+    {
+        $document = DocumentRER::findOrFail($id);
+        // Construisez l'URL complète
+        $remoteFileUrl = 'http://localhost:8000/storage/' . $document->chemin;
+    
+        try {
+            $client = new Client();
+            $response = $client->get($remoteFileUrl);
+    
+            if ($response->getStatusCode() == 200) {
+                $contentType = $response->getHeaderLine('Content-Type');
+    
+                return Response::make($response->getBody()->getContents(), 200, [
+                    'Content-Type' => $contentType,
+                    'Content-Disposition' => 'attachment; filename="' . basename($remoteFileUrl) . '"',
+                ]);
+            } else {
+                abort(404);
+            }
+        } catch (\Exception $e) {
+            abort(404);
+        }
+    }
 
 
 

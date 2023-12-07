@@ -197,7 +197,7 @@ button[type='submit'] {
     <!-- Main Container -->
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-12">
                  <h4> Dashboard</h4><hr>
                  <!-- Contenu de la page -->
                  <div>

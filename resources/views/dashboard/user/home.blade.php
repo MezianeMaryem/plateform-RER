@@ -6,9 +6,103 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>User Dashboard | Home</title>
     <link rel="stylesheet" href="{{ asset('bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
     <style>
         body { padding-top: 65px; }
         .navbar-brand img { height: 30px; }
+    
+  
+
+/* Style the header to match the logo colors */
+h1 {
+  color: #ffffff; /* white text */
+  margin-bottom: 20px;
+}
+
+/* Add a border and padding to the main content area */
+.main-container {
+  border: 2px solid #a0a0a0; /* gray border */
+  padding: 20px;
+  border-radius: 5px;
+
+  max-width: 600px;
+  background-color: #333333; /* slightly lighter gray for contrast */
+}
+
+/* Style the file input and submit button to match the theme */
+input{
+  width: 400px;
+  height: 30px;
+  border: 1px solid #333;
+  background-color: #fff;
+  color: black;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 5px;
+  font-size: large;
+
+}
+
+/* Hover effect for buttons */
+button[type='submit']:hover {
+  background-color: #117a8b; /* a blue shade */
+}
+
+/* Specific color for the button to match the logo */
+button[type='submit'] {
+  width: 50px;
+  height: 45px;
+  font-size: large;
+  background-color: #d9534f; /* red shade from the logo */
+  border-color: #d43f3a;
+  margin-left: 10px;
+}
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+      
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #007bff; /* Bleu */
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: white; /* Gris clair pour les lignes paires */
+    }
+
+    tr:nth-child(odd) {
+        background-color: white; /* Blanc pour les lignes impaires */
+    }
+
+    tr:hover {
+        background-color: black; /* Bleu plus clair au survol */
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+
+    /* Style the table container to allow scrolling */
+.scrollable-table-container {
+  max-height: 400px; /* ou la hauteur que vous voulez */
+  overflow: auto; /* Permet le défilement si le contenu dépasse la hauteur max */
+}     
+
+
+
     
         .card-container {
             display: flex;
@@ -23,8 +117,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   overflow: hidden;
-  width: 250px;
   height: 300px; /* Adjust height as necessary */
+  width: 250px;
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
 }
 
@@ -71,7 +165,8 @@
 .card:hover .card-text {
   background: rgba(0, 0, 0, 0.7); /* Darken the background on hover */
 }
-     
+
+
     </style>
 </head>
 <body>
@@ -112,27 +207,90 @@
 
                      <br><br><br><br>
      
-                    <div class="card-container">
-                    <a href="{{ route('user.userlocal') }}">
-    <div class="card">
-   
-    <img src="{{ asset('images/local.jpeg') }}" alt="Description" />
-        <div class="card-text">Local documents</div>
-   
-    </div>
-    </a>
+                     <div class="card-container">
+
+
+                     <div class="center-content">
+            <br>
+            <form action="{{ route('user.home') }}" method="GET">
+    <input type="text" name="search" placeholder="search">
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
+
+
+        <div id="results">
+               <br><br>
+
+               <div class="scrollable-table-container">
+
+        <table>
+        <thead>
+            <tr>
+            
+                <th>Name</th>
+                <th>User</th>
+                <th>University</th>
+                <th>Created on</th>
+                <th>download</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+ @foreach ($localDocuments as $document)
+        <tr>
+            <td>{{ $document->nom }}</td>
+            <td>{{ $document->nom_utilisateur }}</td>
+            <td>{{ $document->Univ }}</td>
+            <td>{{ $document->created_at }}</td>
+            <td><a href="{{ route('documents.download', $document->id) }}">Download</a></td>
+
+        </tr>
+    @endforeach
+    @foreach ($publicDocuments as $document)
+        <tr>
+            <td>{{ $document->nom }}</td>
+            <td>{{ $document->nom_utilisateur }}</td>
+            <td>{{ $document->Univ }}</td>
+            <td>{{ $document->created_at }}</td>
+            <td><a href="{{ route('documents.download', $document->id) }}">Download</a></td>
+
+        </tr>
+    @endforeach
+           
+               
+          
+        </tbody>
+    </table>
+               </div>
+
+
+</div> 
+            </form>
+        </div>
+
+
+
+
+</div>
+      
+
+
+                   
+
+<!--
     <a href="{{ route('user.userpublic') }}">
     <div class="card">
     <img src="{{ asset('images/public.jpeg') }}" alt="Description" />    
         <div class="card-text">Public documents</div>
     </div>
     </a>
+-->
     
     
 </div>
 
 
-                    </div>
+               
             </div>
         </div>
     </div>

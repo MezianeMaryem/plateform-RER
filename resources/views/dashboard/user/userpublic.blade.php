@@ -99,6 +99,12 @@ button[type='submit'] {
         padding: 15px;
         text-align: left;
     }
+/* Style the table container to allow scrolling */
+.scrollable-table-container {
+  max-height: 400px; /* ou la hauteur que vous voulez */
+  overflow: auto; /* Permet le défilement si le contenu dépasse la hauteur max */
+}
+
 </style>
 
 
@@ -131,16 +137,19 @@ button[type='submit'] {
 
         <div id="results">
                <br><br>
+
+               <div class="scrollable-table-container">
+
         <table>
         <thead>
             <tr>
             
-                <th>Nom</th>
-                <th>Nom d'utilisateur</th>
-                <th>Université</th>
-                <th>Privé/Public</th>
-                <th>Date de Création</th>
-                <th>download</th>
+                <th>Name</th>
+                <th>user</th>
+                <th>University</th>
+                <th>Private/Public</th>
+                <th>Created on</th>
+                <th>Download</th>
             </tr>
         </thead>
         <tbody>
@@ -154,13 +163,13 @@ button[type='submit'] {
                     <td>{{ $document->Univ }}</td>
                     <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
                     <td>{{ $document->created_at->toFormattedDateString() }}</td>
-                    <td><a href="{{ route('documents.download', $document->id) }}">Télécharger</a>
+                    <td><a href="{{ route('documents.download', $document->id) }}">download</a>
 </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
+               </div>
 
 
 </div> 

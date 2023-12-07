@@ -87,18 +87,27 @@ Route::get('/adddocument', function () {
 })->name('admin.adddocument');
 
 
+Route::get('/userview', function () {
+    return view('dashboard.user.userview');
+})->name('user.userview');
+
+
 
     // The 'store' method in 'DocumentController' will handle document uploads
 Route::post('public/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
 Route::get('public/documents', [DocumentController::class, 'store'])->name('admin.documents.store');
 
 // Pour l'affichage des documents
-
 //Route::get('public/documentsindex', [DocumentController::class, 'index'])->name('documents.index');
-Route::get('/documents/search', [DocumentController::class, 'index'])->name('documents.search');
 
+
+Route::get('/documents/search', [DocumentController::class, 'index'])->name('documents.search');
 Route::get('/local-documents', [DocumentController::class, 'showDocuments'])->name('user.userlocal');
 Route::get('/public-documents', [DocumentController::class, 'showDocumentspublic'])->name('user.userpublic');
 
 
+
 Route::get('storage/app/public/documents/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.download');
+
+
+Route::get('user/home', [DocumentController::class, 'showAllDocuments'])->name('user.home');

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DocumentRER;
 
-
 class DocumentController extends Controller
 {
 
@@ -46,7 +45,27 @@ class DocumentController extends Controller
         return view('dashboard.user.userpublic', ['documents' => $documents]);
     }
     
-
+ 
+    public function showAllDocuments(Request $request)
+    {
+        $query = $request->input('search');
+    
+        if ($query) {
+            $localDocuments = Document::where('nom', 'like', '%' . $query . '%')->get();
+            $publicDocuments = DocumentRER::where('nom', 'like', '%' . $query . '%')
+            ->where('Univ', '<>', 'UTBM')
+            ->get();        } 
+            else 
+            {
+            $localDocuments = Document::all();
+            $publicDocuments = DocumentRER::where('Univ', '<>', 'UTBM')->get();
+        }
+    
+       // dd($localDocuments, $publicDocuments); // Ajoutez cette ligne pour déboguer
+    
+        return view('dashboard.user.home', ['localDocuments' => $localDocuments, 'publicDocuments' => $publicDocuments]);
+    }
+    
 
 
 
@@ -62,9 +81,7 @@ class DocumentController extends Controller
             abort(404);
         }
     }
-    
-    
-    
+   
 
 
 
@@ -92,6 +109,7 @@ class DocumentController extends Controller
             $document->save();
     
 
+            
                    // Enregistrez dans la base de données RER uniquement si 'public' est égal à 'yes'
         if ($request->input('public') === 'yes') {
             $documentRER = new DocumentRER();

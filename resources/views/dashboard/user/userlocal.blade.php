@@ -18,6 +18,8 @@ body {
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  scroll-behavior: smooth;
+  
 }
 
 /* Style the header to match the logo colors */
@@ -99,6 +101,13 @@ button[type='submit'] {
         padding: 15px;
         text-align: left;
     }
+
+    /* Style the table container to allow scrolling */
+.scrollable-table-container {
+  max-height: 400px; /* ou la hauteur que vous voulez */
+  overflow: auto; /* Permet le défilement si le contenu dépasse la hauteur max */
+}
+
 </style>
 
 
@@ -131,15 +140,16 @@ button[type='submit'] {
 
         <div id="results">
                <br><br>
-        <table>
+               <div class="scrollable-table-container">
+               <table>
         <thead>
             <tr>
             
-                <th>Nom</th>
-                <th>Nom d'utilisateur</th>
-                <th>Privé/Public</th>
-                <th>Date de Création</th>
-                <th>download</th>
+                <th>Name</th>
+                <th>User</th>
+                <th>Private/Public</th>
+                <th>Created on</th>
+                <th>Download</th>
             </tr>
         </thead>
         <tbody>
@@ -152,11 +162,11 @@ button[type='submit'] {
                     <td>{{ $document->nom_utilisateur }}</td>
                     <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
                     <td>{{ $document->created_at->toFormattedDateString() }}</td>
-                    <td><a href="{{ route('documents.download', $document->id) }}">Télécharger</a>                </tr>
+                    <td><a href="{{ route('documents.download', $document->id) }}">Download</a>                </tr>
             @endforeach
         </tbody>
     </table>
-
+               </div>
 
 
 </div> 

@@ -92,7 +92,7 @@ class DocumentController extends Controller
     {
         $document = DocumentRER::findOrFail($id);
         // Construisez l'URL complète
-        $remoteFileUrl = 'http://localhost:8000/storage/' . $document->chemin;
+        $remoteFileUrl = 'http://4.180.7.220:8000/storage/' . $document->chemin;
     
         try {
             $client = new Client();

@@ -34,12 +34,13 @@ services:
     image: mysql:latest
     platform: linux/amd64
     environment:
-      - MYSQL_DATABASE=${DB_HOST_UTBM}
+      - MYSQL_DATABASE=${DB_DATABASE_UTBM}
       - MYSQL_USER=${DB_USERNAME_UTBM}
-      - MYSQL_PASSWORD=${DB_PASSOWRD_UTBM}
+      - MYSQL_PASSWORD=${DB_PASSWORD_UTBM}
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD_UTBM}
     volumes:
       - db-utbm-data:/var/lib/mysql
+      - ./UTBM.sql:/docker-entrypoint-initdb.d/UTBM.sql
     ports:
       - "${DB_PORT_UTBM}"
     healthcheck:

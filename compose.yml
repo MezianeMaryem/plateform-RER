@@ -12,23 +12,6 @@ services:
     depends_on:
       db-utbm:
         condition: service_healthy
-      db-rer:
-        condition: service_healthy
-
-  node:
-    image: node:latest
-    platform: linux/amd64
-    volumes:
-      - laravel-volume:/usr/src/app
-    environment:
-      - APP_URL=http://localhost:8000
-    ports:
-      - "5173:5173"
-    working_dir: /usr/src/app
-    command: sh -c 'chmod -R 777 /usr/src/app/ &&
-      npm install && npm run dev'
-    depends_on:
-      - laravel
 
   db-utbm:
     image: mysql:latest
@@ -48,23 +31,6 @@ services:
       timeout: 3s
       retries: 10
 
-  db-rer:
-    image: mysql:latest
-    platform: linux/amd64
-    environment:
-      - MYSQL_DATABASE=${RER_DB_DATABASE}
-      - MYSQL_USER=${RER_DB_USERNAME}
-      - MYSQL_PASSWORD=${RER_DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${RER_DB_ROOT_PASSWORD}
-    volumes:
-      - db-rer-data:/var/lib/mysql
-    ports:
-      - "${RER_DB_PORT}"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-c", "1"]
-      timeout: 3s
-      retries: 10
-  
   nginx:
     image: nginx:latest
     platform: linux/amd64
@@ -74,10 +40,9 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - node
+      - laravel
     command: /bin/bash -c "nginx -g 'daemon off;'"
 
 volumes:
   laravel-volume:
   db-utbm-data:
-  db-rer-data:

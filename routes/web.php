@@ -103,9 +103,9 @@ Route::get('public/documents', [DocumentController::class, 'store'])->name('admi
 
 Route::get('/documents/search', [DocumentController::class, 'index'])->name('documents.search');
 Route::get('/local-documents', [DocumentController::class, 'showDocuments'])->name('user.userlocal');
-Route::get('/public-documents', [DocumentController::class, 'showDocumentspublic'])->name('user.userpublic');
+//Route::get('/public-documents', [DocumentController::class, 'showDocumentspublic'])->name('user.userpublic');
 
-
+Route::get('/public-documents', [DocumentController::class, 'showAdminAllDocuments'])->name('user.userpublic');
 
 Route::get('storage/app/public/documents/{id}', [DocumentController::class, 'downloadDocument'])->name('documents.download');
 Route::get('/download/remote-document/{id}', [DocumentController::class, 'downloadRemoteDocument'])->name('documents.download.remote');

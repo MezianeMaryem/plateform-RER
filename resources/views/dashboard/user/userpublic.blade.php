@@ -155,18 +155,32 @@ button[type='submit'] {
         <tbody>
 
 
-            @foreach ($documents as $document)
-                <tr>
-                   
-                    <td>{{ $document->nom }}</td>
-                    <td>{{ $document->nom_utilisateur }}</td>
-                    <td>{{ $document->Univ }}</td>
-                    <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
-                    <td>{{ $document->created_at->toFormattedDateString() }}</td>
-                    <td><a href="{{ route('documents.download', $document->id) }}">download</a>
-</td>
-                </tr>
-            @endforeach
+
+
+            @foreach ($localDocuments as $document)
+        <tr>
+            <td>{{ $document->nom }}</td>
+            <td>{{ $document->nom_utilisateur }}</td>
+            <td>{{ $document->Univ }}</td>
+            <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
+            <td>{{ $document->created_at->toFormattedDateString() }}</td>
+            <td><a href="{{ route('documents.download', $document->id) }}">Download</a></td>
+
+        </tr>
+    @endforeach
+    @foreach ($publicDocuments as $document)
+        <tr>
+            <td>{{ $document->nom }}</td>
+            <td>{{ $document->nom_utilisateur }}</td>
+            <td>{{ $document->Univ }}</td>
+            <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
+            <td>{{ $document->created_at->toFormattedDateString() }}</td>
+            <td><a href="{{ route('documents.download.remote', $document->id) }}">Download</a></td>
+
+        </tr>
+    @endforeach
+
+            
         </tbody>
     </table>
                </div>

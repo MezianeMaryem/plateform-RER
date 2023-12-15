@@ -159,7 +159,11 @@ button[type='submit'] {
 
             @foreach ($localDocuments as $document)
         <tr>
-            <td>{{ $document->nom }}</td>
+            <td>  @php
+        $parts = explode('_', $document->nom, 2); // Sépare le nom en utilisant '_' comme séparateur
+        $displayName = count($parts) > 1 ? $parts[1] : $document->nom; // Utilise la partie après '_', sinon le nom entier
+    @endphp
+    {{ $displayName }}</td>
             <td>{{ $document->nom_utilisateur }}</td>
             <td>{{ $document->Univ }}</td>
             <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
@@ -170,7 +174,11 @@ button[type='submit'] {
     @endforeach
     @foreach ($publicDocuments as $document)
         <tr>
-            <td>{{ $document->nom }}</td>
+            <td>  @php
+        $parts = explode('_', $document->nom, 2); // Sépare le nom en utilisant '_' comme séparateur
+        $displayName = count($parts) > 1 ? $parts[1] : $document->nom; // Utilise la partie après '_', sinon le nom entier
+    @endphp
+    {{ $displayName }}</td>
             <td>{{ $document->nom_utilisateur }}</td>
             <td>{{ $document->Univ }}</td>
             <td>{{ $document->prive ? 'Privé' : 'Public' }}</td>
